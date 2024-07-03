@@ -19,10 +19,10 @@ const uniqueCharsWithObj = (str) => {
 }
 
 /* TESTS */
-console.log(uniqueChars('abcd'), 'true')
-console.log(uniqueChars('abccd'), 'false')
-console.log(uniqueChars('bhjjb'), 'false')
-console.log(uniqueChars('mdjq'), 'true')
-console.log(uniqueChars('1353'), 'false')
-console.log(uniqueChars('11'), 'false')
-console.log(uniqueChars('bhaa'), 'false')
+console.log(uniqueCharsWithObj('abcd'), 'true')
+console.log(uniqueCharsWithObj('abccd'), 'false')
+console.log(uniqueCharsWithObj('bhjjb'), 'false')
+console.log(uniqueCharsWithObj('mdjq'), 'true')
+console.log(uniqueCharsWithObj('1353'), 'false')
+console.log(uniqueCharsWithObj('11'), 'false')
+console.log(uniqueCharsWithObj('bhaa'), 'false')
