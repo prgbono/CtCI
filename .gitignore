@@ -3,6 +3,6 @@ node_modules/
 .DS_Store
 
 # error-handling-system
-/error-handling-system/node_modules
+/js-error-handling-system/node_modules
 
 
