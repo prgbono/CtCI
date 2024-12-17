@@ -28,6 +28,11 @@ Flujo:
 2. Actionable Messages: 
 - Provides users with specific error messages based on the error type, enhancing their understanding and ability to respond appropriately.
 
+**Mejora 2:**
+**Retry Mechanism for failed http requests.**
+- Implement retry options for failed requests, such as a retry button in the UI or automatic retries with exponential backoff, to enhance reliability.
+
+
 **Puntos importantes:**
 - How to set up centralized error handling with Axios interceptors.
 - The role of a custom useApi hook for managing API request state.

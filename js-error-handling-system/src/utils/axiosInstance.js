@@ -1,11 +1,26 @@
 import ERROR_MESSAGES from '../config/customErrors'
 import axios from 'axios'
+import axiosRetry from 'axios-retry'
 import { toast } from 'react-toastify'
 
 const axiosInstance = axios.create({
   // TODO: environmet variable for baseURL
   baseURL: 'https://fakestoreapi.com/products',
   headers: { 'Content-type': 'application/json' }
+})
+
+axiosRetry(axiosInstance, {
+  retries: 3,
+  retryDelay: (retryCount) => retryCount * 1000,
+  retryCondition: (error) => {
+    return (
+      axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+      error.response.status === 500
+    )
+  },
+  onRetry: (retryCount, error, requestConfig) => {
+    console.log(`Retrying request to ${requestConfig.url} (${retryCount}/3)`)
+  }
 })
 
 axiosInstance.interceptors.response.use(
