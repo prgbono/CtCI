@@ -32,11 +32,16 @@ Flujo:
 **Retry Mechanism for failed http requests.**
 - Implement retry options for failed requests, such as a retry button in the UI or automatic retries with exponential backoff, to enhance reliability.
 
+**Mejora 3:**
+**Cancel Requests on Component Unmount**
+- Cancel Tokens: Utilizes Axios cancel tokens to cancel ongoing API requests when a new request is made or when the component unmounts.
+- Prevent Memory Leaks: Ensures that no state updates occur on unmounted components, preventing potential memory leaks and redundant requests, ensuring a stable and efficient app performance.
+- Logging Canceled Requests: Logs canceled requests for debugging purposes.
+
 
 **Puntos importantes:**
 - How to set up centralized error handling with Axios interceptors.
 - The role of a custom useApi hook for managing API request state.
 - The benefits of using service modules to organize API logic (ProductService y UserService)
 - Advanced techniques for user-friendly error handling, including retry options and request cancellation.
-	
 
