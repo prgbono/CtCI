@@ -21,6 +21,13 @@ Flujo:
 12. Los errores están manejados en el archivo `axiosInstance.js`, en la parte de `interceptor.response.use`
 
 
+**Mejora 1:** En la línea: https://github.com/prgbono/CtCI/blob/main/js-error-handling-system/src/utils/axiosInstance.js#L23
+1. Error Parsing Customization:
+- Categorize errors (e.g., network vs. validation) and provide actionable messages to help users understand issues and possible solutions.
+- Error Categorization: The interceptor checks the type property in the error response to determine the nature of the error (e.g., validation or authentication).
+2. Actionable Messages: 
+- Provides users with specific error messages based on the error type, enhancing their understanding and ability to respond appropriately.
+
 **Puntos importantes:**
 - How to set up centralized error handling with Axios interceptors.
 - The role of a custom useApi hook for managing API request state.

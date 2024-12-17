@@ -20,6 +20,7 @@ axiosInstance.interceptors.response.use(
     let message = ERROR_MESSAGES[status] || ERROR_MESSAGES.GENERIC_ERROR
     let notificationType = 'error'
 
+    // Custom logic for customising errors types
     if (data?.type === 'validation') {
       message = `Validation error ${data.message}`
       notificationType = 'warning'
@@ -36,7 +37,7 @@ axiosInstance.interceptors.response.use(
     toast[notificationType](message)
 
     //TODO: Handle unathorized access by redireting to login
-    if (status === 401) console.log('TODO Redirection to login')
+    if (status === 401) console.log('TODO: Redirection to login')
 
     return Promise.reject(error)
   }
