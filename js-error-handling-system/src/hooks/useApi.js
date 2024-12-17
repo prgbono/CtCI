@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-
-import axios from 'axios'
+import { useCallback, useState } from 'react'
 
 const useApi = (apiFunc, immediate = false) => {
   const [data, setData] = useState(null)
@@ -8,9 +6,8 @@ const useApi = (apiFunc, immediate = false) => {
   const [error, setError] = useState(null)
   const cancelTokenSource = useRef(null)
 
-  const request = async (...args) => {
-    setLoading(true)
-    setError(null)
+  const request = useCallback(
+    async (...args) => {
 
     // Cancel any previous request
     if (cancelTokenSource.current) {
@@ -29,11 +26,9 @@ const useApi = (apiFunc, immediate = false) => {
         console.log('Request canceled: ', err.message)
       } else {
         setError(err.message || err)
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
+    },
+    [apiFunc]
+  )
 
   // cleanup on component unmount
   useEffect(() => {
