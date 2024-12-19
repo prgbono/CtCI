@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      toast.error(ERROR_MESSAGES.NEWTOWK_ERROR)
+      toast.error(ERROR_MESSAGES.NETWORK_ERROR)
       return Promise.reject(error)
     }
 
