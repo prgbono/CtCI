@@ -1,15 +1,25 @@
+import axios, { AxiosError, CancelTokenSource } from 'axios'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import axios from 'axios'
+interface UseApiReturn<T> {
+  data: T | null
+  loading: boolean
+  error: string | null
+  request: (...args: unknown[]) => Promise<void>
+}
 
-const useApi = (apiFunc, immediate = false) => {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(immediate)
-  const [error, setError] = useState(null)
-  const cancelTokenSource = useRef(null)
+interface ApiFunc<T> {
+  (...args: unknown[]): Promise<{ data: T }>
+}
+
+const useApi = <T>(apiFunc: ApiFunc<T>, immediate = false): UseApiReturn<T> => {
+  const [data, setData] = useState<T | null>(null)
+  const [loading, setLoading] = useState<boolean>(immediate)
+  const [error, setError] = useState<string | null>(null)
+  const cancelTokenSource = useRef<CancelTokenSource | null>(null)
 
   const request = useCallback(
-    async (...args) => {
+    async (...args: unknown[]) => {
       setLoading(true)
       setError(null)
 
@@ -29,9 +39,9 @@ const useApi = (apiFunc, immediate = false) => {
         setData(result.data)
       } catch (err) {
         if (axios.isCancel(err)) {
-          console.log('Request canceled:', err.message)
+          console.log('Request canceled:', (err as AxiosError).message)
         } else {
-          setError(err.message)
+          setError((err as Error).message)
         }
       } finally {
         setLoading(false)
