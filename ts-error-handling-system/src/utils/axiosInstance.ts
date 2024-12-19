@@ -1,5 +1,6 @@
+import axios, { AxiosError } from 'axios'
+
 import ERROR_MESSAGES from '../config/customErrors'
-import axios from 'axios'
 import axiosRetry from 'axios-retry'
 import { toast } from 'react-toastify'
 
@@ -11,15 +12,16 @@ const axiosInstance = axios.create({
 
 axiosRetry(axiosInstance, {
   retries: 3,
-  retryDelay: (retryCount) => retryCount * 1000,
-  retryCondition: (error) => {
-    return (
-      axiosRetry.isNetworkOrIdempotentRequestError(error) ||
-      error.response.status === 500
+  retryDelay: (retryCount: number) => retryCount * 1000,
+  retryCondition: (error: AxiosError): boolean | Promise<boolean> => {
+    return !!(
+      error.response &&
+      (axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+        error.response.status === 500)
     )
   },
-  onRetry: (retryCount, error, requestConfig) => {
-    console.log(`Retrying request to ${requestConfig.url} (${retryCount}/3)`)
+  onRetry: (retryCount, error) => {
+    console.log(`Retrying request to ${error.config?.url} (${retryCount}/3)`)
   }
 })
 
@@ -27,13 +29,15 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      toast.error(ERROR_MESSAGES.NEWTOWK_ERROR)
+      toast.error(ERROR_MESSAGES.NETWORK_ERROR)
       return Promise.reject(error)
     }
 
     const { status, data } = error.response
-    let message = ERROR_MESSAGES[status] || ERROR_MESSAGES.GENERIC_ERROR
-    let notificationType = 'error'
+    let message =
+      ERROR_MESSAGES[status as keyof typeof ERROR_MESSAGES] ||
+      ERROR_MESSAGES.GENERIC_ERROR
+    let notificationType: 'error' | 'info' | 'warning' | 'success' = 'error'
 
     // Custom logic for customising errors types
     if (data?.type === 'validation') {
@@ -48,7 +52,6 @@ axiosInstance.interceptors.response.use(
     }
 
     // Display error notification with appropriate severity
-    // toast.error(message)
     toast[notificationType](message)
 
     //TODO: Handle unathorized access by redireting to login
