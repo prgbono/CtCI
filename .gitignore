@@ -4,5 +4,6 @@ node_modules/
 
 # error-handling-system
 /js-error-handling-system/node_modules
+/ts-error-handling-system/node_modules
 
 
