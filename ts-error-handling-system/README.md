@@ -1,4 +1,5 @@
-Goal (In typeScript)-> https://dev.to/riyon_sebastian/building-a-robust-frontend-error-handling-system-with-axios-and-custom-hooks-27k3
+This implementation is done from an [article](https://dev.to/riyon_sebastian/building-a-robust-frontend-error-handling-system-with-axios-and-custom-hooks-27k3) of Riyon Sebastian published in Dev.to. This is just its adaption to TypeScript.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
